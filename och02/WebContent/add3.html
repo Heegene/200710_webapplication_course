@@ -3,15 +3,32 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>이콩이 is 얼굴맛집</title>
-
+<script type="text/javascript">
+		function check() {
+				if (!frm.num.value) {
+					alert('입력값이 없습니다.');
+					frm.num.focus();
+					return false;
+				} 
+				if (isNaN(frm.num.value)) {
+					alert('숫자를 입력해 주세요.')
+					frm.num.value = "";
+					return false;
+				}
+				return true;
+				/* check의 내용이 true이면 아래 form의 action="" 안으로 넘어감 */
+		}
+</script>
 
 </head>
 <body>
 
-	<h1> 숫자를 입력하세요 </h1>
-	<form action="" name="frm" onsubmit="">
-		숫자 : <input type="text" name="num"> <p>
-		  	<input type="submit" value="확인">
+	<h3>숫자를 입력하세요</h3>
+	action 에서 Add3 이라는 것을 찾기 위해 서블릿 파일을 뒤져봄
+	<form action="Add3" name="frm" onsubmit="return check()">
+		숫자 : <input type="text" name="num">
+		<p>
+			<input type="submit" value="확인">
 	</form>
 
 </body>
