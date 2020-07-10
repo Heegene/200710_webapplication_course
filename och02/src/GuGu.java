@@ -22,10 +22,21 @@ public class GuGu extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		int num = Integer.parseInt(request.getParameter("num")); // html에서 입력한 num으로부터 받아서 정수화
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=utf-8");
-		PrintWriter out = get
+		PrintWriter out = response.getWriter();
+		out.print("<html> <body>");
+		out.print("<h1> 구구단 " + num + " 단 </h1>");
+		
+		for (int i = 1; i < 10; i++) {
+			out.print(num + " * " + i + " = " + num*i + "<br>");
+			// 이렇게도 가능
+			// out.printf("%d * %d = %d", num*i, num, (num*i));
+		}
+		
+		out.print("</body> </html>");
+		out.close();
 	}
 
 	
