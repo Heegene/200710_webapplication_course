@@ -11,28 +11,31 @@
 </head>
 <body>
 	<% 
-		request.setCharacterEncoding("utf-8");
+	request.setCharacterEncoding("utf-8");
 	
 	String title = request.getParameter("title");
 	String writer = request.getParameter("writer");
 	String content = request.getParameter("content");
 	
-	String msg = "제목 : " + title + "\r \n " ;
+	String msg = "제목 : " + title + "\r \n";
 			// r n은 캐리지리턴 라인피드(엔터역할)
-	msg += "작성자 : " + writer + "\r \n " ;
-	msg += "내용 : " + content + "\r \n " ;
+	msg += "작성자 : " + writer + "\r \n";
+	msg += "내용 : " + content + "\r \n";
 	Date date = new Date();
 	// import시 util date를 import 해야하는것 유의
-	long fileName = date.getTime();
+	long fileName = date.getTime(); //시간이 숫자로 들어감 
 	
-	String real = application.getRealPath("/WEB-INF/OUT/"+fileName+".txt");
+	String real = application.getRealPath("/WEB-INF/out/"+fileName+".txt");
+	// webinf 밑에 out이라는 이름의 폴더를 생성해 놓고 돌려야 함 
 	
-	System.out.println(real);
+	System.out.println(real); // 개발자가 볼수있게 콘솔에 뿌려줌 
 	// java io의 filewriter 임포트 
 	FileWriter fw = new FileWriter(real);
 	fw.write(msg);
 	fw.flush();
 	fw.close();
+	
+	System.out.println("DONE"); // 개발자가 볼수있게 콘솔에 뿌려줌 
 	
 	
 	out.print("제목 :" + title + "<br>");
