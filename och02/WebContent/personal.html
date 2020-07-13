@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function chk() {
+		if (!frm.name.value) {
+			alert('이름을 입력하세요');
+			frm.name.focus();
+			return false;
+		}
+		
+		if (!frm.id.value) {
+			alert('아이디를 입력하세요');
+			frm.id.focus();
+			return false;
+		}
+		
+		if (!frm.password.value) {
+			alert('비밀번호를 입력하세요');
+			frm.password.focus();
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+</script>
+</head>
+<body>
+
+</body>
+<h1>개인정보</h1>
+
+<form action="Person" name="frm" method="post" onsubmit="return chk()">
+	<table border="1" bgcolor="yellow">
+
+		<tr>
+			<td>이름</td>
+			<td><input type="text" name="name"></td>
+		</tr>
+
+		<tr>
+			<td>아이디</td>
+			<td><input type="text" name="id"></td>
+		</tr>
+
+		<tr>
+			<td>암호</td>
+			<td><input type="password" name="password"></td>
+		</tr>
+
+		<tr>
+			<td>성별</td>
+			<td><input type="radio" name="gender" value="male">남자<br>
+			<input type="radio" name="gender" value="female">여자</td>
+
+		</tr>
+
+		<tr>
+			<td>메일 수신</td>
+			<td><input type="checkbox" name="notice" value="공지">공지<br>
+			<input type="checkbox" name="notice" value="광고">광고<br>
+			<input type="checkbox" name="notice" value="배송">배송</td>
+
+		</tr>
+
+		<tr>
+			<td> 직업 </td>
+			<td>
+			<select name="job">
+					<option value="장군">장군</option>
+					<option value="가수">가수</option>
+					<option value="공무원">공무원</option>
+					
+			</select> 
+			</td>
+			
+		</tr>
+
+
+		<tr>
+			<td ><input type="submit" value="완료"></td>
+			<td > <input type="reset" value="입력취소"> </td>
+	</table>
+</form>
+
+</html>
