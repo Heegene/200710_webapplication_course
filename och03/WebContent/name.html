@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function chk() {
+		
+		if (!frm.name.value) {
+			alert('이름을 입력해 주세요');
+			frm.name.focus();
+			return false;
+		}
+		
+		if (!frm.addr.value) {
+			alert('주소를 입력해 주세요');
+			frm.addr.focus();
+			return false;
+		}
+		else {
+			return true;
+			}			
+				
+			/* check의 내용이 true이면 아래 form의 action="" 안으로 넘어감 */
+	}
+		
+</script>
+</head>
+<body>
+<h1> 이름과 주소를 입력하세요</h1>
+<form action="name.jsp" name="frm" onsubmit="return chk()" method="post">
+	이름 : <input type="text" name="name">
+	<br>
+	주소 : <input type="text" name="addr">
+	<br>
+	<input type="submit" value="입력완료">
+
+ </form>
+	
+</body>
+</html>

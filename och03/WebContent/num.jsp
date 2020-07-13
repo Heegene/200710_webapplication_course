@@ -7,14 +7,17 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h2>연산 결과</h2>
-	덧셈 :    <%= request.getAttribute("add") %> <br>
-	뺄셈 :    <%= request.getAttribute("min") %> <br>
-	곱셈 :    <%= request.getAttribute("mul") %> <br>
-	나눗셈 :  <%= request.getAttribute("div") %> <br>
+	<%
+	int num1 = Integer.parseInt(request.getParameter("num1"));
+	int res = 0;
+	for (int i = 1; i <= num1; i++) {
+		res += i;
+	}
 	
+	%>
 	
-	
+	<h1> 1부터 <%=num1%>까지의 합 </h1>
+	<%=res%>
 	
 </body>
 </html>

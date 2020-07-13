@@ -7,14 +7,15 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h2>연산 결과</h2>
-	덧셈 :    <%= request.getAttribute("add") %> <br>
-	뺄셈 :    <%= request.getAttribute("min") %> <br>
-	곱셈 :    <%= request.getAttribute("mul") %> <br>
-	나눗셈 :  <%= request.getAttribute("div") %> <br>
+	<% 
+		request.setCharacterEncoding("utf-8");
+		String name = request.getParameter("name");
+	    String addr = request.getParameter("addr");	
+	%>
 	
-	
-	
-	
+	<%=name%> 님은 <%=addr%> 에 사시는군요! 
+
+
+
 </body>
 </html>

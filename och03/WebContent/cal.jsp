@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+여기는 연산만 하고 다음 페이지 
 <%
 	int num1 = Integer.parseInt(request.getParameter("num1")); // 내장객체 request 
 	int num2 = Integer.parseInt(request.getParameter("num2"));
@@ -24,7 +25,7 @@
 	
 	out.flush();
 	RequestDispatcher rd = request.getRequestDispatcher("calResult.jsp");
-	// rd.forward (request, response);
+	// rd.forward(request, response);
 	rd.include(request, response);
 
 %>
