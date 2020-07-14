@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+	<script type="text/javascript">
+		function chk() {
+			if (!frm.name.value) {
+				alert("이름을 입력하세요");
+				frm.name.focus();
+				return false;
+			}
+			
+			return true;
+		}
+		window.onload = function() {
+			frm.name.value = "홍길동";// 윈도우 로드시 기본값으로 들어가게 해놨음 
+			frm.name.focus();
+		}
+	
+	</script>
+</head>
+<body>
+	<h2> 이름을 입력하세요. </h2>
+	<!--  
+	 <form action="Greet" name="frm" onsubmit="return chk()">	
+	
+	 -->
+	<form action="greet.jsp" name="frm" onsubmit="return chk()">
+		이름 : <input type="text" name="name"> <br>
+		<input type="submit" value="확인">
+	
+	</form>
+</body>
+</html>
