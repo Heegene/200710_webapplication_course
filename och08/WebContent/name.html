@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function chk() {
+		var name = document.getElementById("name");
+		var addr = document.getElementById("addr");
+		if (!name.value) {	alert("이름을 입력하시오");
+			name.focus();	return false;		}
+		if (!addr.value) {	alert("어디 사는데 ?");
+			addr.focus();	return false;		}
+		return true;
+	}
+</script></head><body>
+<h2>이름과 주소를 입력하세요</h2>
+<!-- <form action="name.jsp" onsubmit="return chk()"> -->
+<form action="name2.jsp" onsubmit="return chk()">
+	이름 : <input type="text" name="name" id="name"><p>
+	주소 : <input type="text" name="addr" id="addr"><p>
+<input type="submit" value="확인">
+</form>
+</body>
+</html>
