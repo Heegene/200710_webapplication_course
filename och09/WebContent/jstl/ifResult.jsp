@@ -8,9 +8,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<c:set var="num1" value="10" scope="request"> </c:set>
-	<c:set var="num2" value="20" scope="request"> </c:set>
+	<c:if test="${num1 >= num2 }">
+		${ num1 } 이 ${num2 } 보다 크거나 같습니다.
+	</c:if>
 	
-	<jsp:forward page="ifResult.jsp"/>
+	<c:if test="${num1 < num2 }">
+		${ num1 } 이 ${num2 } 보다 작습니다. 
+	</c:if>
 </body>
 </html>

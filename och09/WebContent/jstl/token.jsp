@@ -8,9 +8,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<c:set var="num1" value="10" scope="request"> </c:set>
-	<c:set var="num2" value="20" scope="request"> </c:set>
-	
-	<jsp:forward page="ifResult.jsp"/>
+	<c:set var="animals" value="토끼, 고양이*강아지, 망아지"/>
+	<h2> 사자의 생일 </h2>
+	<c:forTokens var="an" items="${animals}" delims="*">
+		${an } <br> 
+	</c:forTokens>
 </body>
 </html>
