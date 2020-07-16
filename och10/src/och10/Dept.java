@@ -2,15 +2,17 @@ package och10;
 
 public class Dept {
 	
-	private int detpno;
+	private int deptno;
 	private String dname;
 	private String loc;
 	
-	public int getDetpno() {
-		return detpno;
+	
+	
+	public int getDeptno() {
+		return deptno;
 	}
-	public void setDetpno(int detpno) {
-		this.detpno = detpno;
+	public void setDeptno(int deptno) {
+		this.deptno = deptno;
 	}
 	public String getDname() {
 		return dname;

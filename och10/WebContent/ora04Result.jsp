@@ -11,7 +11,7 @@
 <% Dept dept = (Dept)request.getAttribute("dept");
 %>
 	<h1> Expression 부서정보</h1>
-	부서코드: <%=dept.getDetpno() %> <br>
+	부서코드: <%=dept.getDeptno() %> <br>
 	부서이름: <%=dept.getDname()%><br>
 	부서위치: <%=dept.getLoc()%><br>
 	

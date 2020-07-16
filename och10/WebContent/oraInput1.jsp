@@ -1,3 +1,4 @@
+<%@page import="java.sql.PreparedStatement"%>
 <%@page import="och10.Dept"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
@@ -12,40 +13,36 @@
 <title>Insert title here</title>
 </head>
 <body>
-	
 	<%
+	request.setCharacterEncoding("utf-8");
+	// response.setContentType("text/html;charset=utf-8");
 	String deptno = request.getParameter("deptno");
+	String dname = request.getParameter("dname");
+	String loc = request.getParameter("loc");
 	String driver = "oracle.jdbc.driver.OracleDriver";
 	String url = "jdbc:oracle:thin:@localhost:1521:xe";
 	Class.forName(driver);
 	
 	
 	Connection conn = DriverManager.getConnection(url, "scott", "tiger");
-	String sqlname = "SELECT * from dept where deptno =" + deptno;
-	Statement stmt = conn.createStatement();
-	ResultSet rs = stmt.executeQuery(sqlname);
-	Dept dept = new Dept(); // DTO 이용해서 값 넣게될것 dept 단위로 움직이도록 
-		
-		if (rs.next()) {
-			dept.setDeptno(rs.getInt(1));
-			dept.setDname(rs.getString(2));
-			dept.setLoc(rs.getString(3));
-			
-			request.setAttribute("dept", dept);
-			rs.close();
-			stmt.close();
-			conn.close();
-			
-			
-		RequestDispatcher rd = request.getRequestDispatcher("ora04Result.jsp");
-		rd.forward(request, response);
+	String sql = "INSERT INTO dept VALUES (?, ?, ?)";
+	// String sql = String.format("insert into dept values (%s, '%s', '%s')", deptno, dname, loc);
+	// 이렇게 formatting으로도 사용 가능 
+	PreparedStatement ps = conn.prepareStatement(sql);
+	ps.setString(1, deptno);
+	ps.setString(2, dname);
+	ps.setString(3, loc);
+
 	
+	int count = ps.executeUpdate();
+		
+		if (count > 0 ) {
+			
+			System.out.println("입력 성공");
+			
 	
 		} else {
-			System.out.print("해당하는 부서가 없습니다.");
-			rs.close();
-			stmt.close();
-			conn.close();
+			System.out.println("해당하는 부서가 없습니다.");
 		}
 			
 	%>
