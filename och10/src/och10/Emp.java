@@ -8,7 +8,7 @@ public class Emp {
 	private String job;
 	private int mgr;
 	private Date hiredate;
-	private int sal;
+	private double sal;
 	private int comm;
 	private int deptno;
 	
@@ -42,10 +42,10 @@ public class Emp {
 	public void setHiredate(Date hiredate) {
 		this.hiredate = hiredate;
 	}
-	public int getSal() {
+	public double getSal() {
 		return sal;
 	}
-	public void setSal(int sal) {
+	public void setSal(double sal) {
 		this.sal = sal;
 	}
 	public int getComm() {
