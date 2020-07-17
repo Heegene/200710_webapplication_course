@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
-import java.util.*;
 
 public class MemberDao {
 	
@@ -24,22 +23,21 @@ public class MemberDao {
 		return conn;
 	}
 	public int insert(MemberDto member) throws SQLException {
-		int count=0;
+		int chk=0;
 		Connection conn = getConnection();
-		String sql = "INSERT INTO member1 VALUES (?, ?, ?, ?)";
+		String sql = "INSERT INTO member1 VALUES (?, ?, ?, sysdate)";
 		PreparedStatement ps = conn.prepareStatement(sql);
-		// id password name regidate
-		String id = (String)session.getAttribute("id");
-		String password = (String)session.getAttribute("password");
-		String name = (String)session.getAttribute("name");
-		Date date = new Date();
 		
+		ps.setString(1, member.getId());
+		ps.setString(2, member.getPassword());
+		ps.setString(3, member.getName());
 		
+		chk = ps.executeUpdate();
 		
-		// String attrValue = (String)session.getAttribute(attrName); 
+		ps.close();
+		conn.close();
 		
-		
-		return count;
+		return chk;
 	}
 	public int check(String id, String password) throws SQLException {
 		int chk = 0;
