@@ -11,9 +11,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%
+	<%  
 		Context init = new InitialContext(); // 환경작업을 초기화하고 인스턴스화
-		DataSource ds = (DataSource)init.lookup("java:comp/env/jdbc/OracleDB"); 
+		DataSource ds = (DataSource)init.lookup("java:comp/env/jdbc/OracleDB"); // 연결을 위한 요소가 datasource 객체에 들어 있음 
+		// 저 OracleDB 가 지칭하는 내용은 context.xml 의 <Context> 태그 안에 기재되어 있음 
+		// resource의 name이 둘 다 jdbc/OracleDB로 같음 그 앞의 env는 environment 
 		// jdbc 환경 중 OracleDB라는 이름 찾아서
 		Connection conn = ds.getConnection(); // 거기에 연결함 (일반 driver잡고 하던 jdbc getconnection이랑 똑같음 )
 		
