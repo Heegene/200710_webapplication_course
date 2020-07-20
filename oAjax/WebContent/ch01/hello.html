@@ -6,24 +6,29 @@
 <script type="text/javascript" src="../js/httpRequest.js"></script>
 <script type="text/javascript">
 	function chk() {
-		var params = "name" + encodeURIComponent(frm.name.value);
+		var params = "name=" + encodeURIComponent(frm.name.value);
 		// sendRequest(url, params, callback, method)
 		sendRequest("hello.jsp", params, result, "POST");
+		// params 받아서 result로 처리하는데 POST 방식으로 처리 
+		// 성공되면 부르는게 콜백함수 result()
+		// "hello.jsp" 호출에 성공하면 result()를 호출하게 됨
+		// 서버에서는 서버응답, 상태값이 정상일 때 body 태그 사이의 내용을 가져옴
+		// text2는 body 사이의 내용만 잘라서 보여줌 
 		
 	}
 	function result() {
-		if(httpRequest.readyState==4) {
-			if (httpRequest.status == 200) {
-				var text1 = httpRequest.responseText;
+		if(httpRequest.readyState==4) { // 서버응답이 완료되었을때(4)
+			if (httpRequest.status == 200) { // 상태값이 정상(200)일때 
+				var text1 = httpRequest.responseText; // hello.jsp 처리하고 받은 메세지 저장
+				// text1을 출력하면 <!DOCTYPE ~~~ 이런내용까지 다 딸려오므로 잘라서 text2로 넣음 
 				start = text1.indexOf("<body>");
 				end = text1.indexOf("</body>");
-				var text2 = text1.substring(start+6, end);
-				// alert(text1);
-				
+				var text2 = text1.substring(start+6, end); // +6 하는 이유는 <body> 자체의 글자 길이때문 
+				alert(text1);
 				alert(text2);
 				
 			} else {
-				alert('request status가 정상이 아닙니다.');
+				alert('request status가 정상이 아닙니다.' + httpReqeust.status);
 			}
 			
 			
