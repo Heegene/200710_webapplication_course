@@ -15,6 +15,8 @@
 		파일명 : <input type="file" name="uploadFile" id="name" required="required"> <br>
 		<input type="submit" value="확인">
 	
+	
+	
 	</form>
 </body>
 </html>
