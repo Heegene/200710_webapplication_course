@@ -15,7 +15,9 @@ public class MemberDao {
 		try {
 			Context ctx = new InitialContext();
 			DataSource ds = (DataSource)ctx.lookup("java:comp/env/jdbc/OracleDB");
+			// datasource를 context lookup으로 찾아서 지정
 			conn = ds.getConnection();
+			// 연결
 			
 		} catch (Exception e) {
 			e.printStackTrace();
