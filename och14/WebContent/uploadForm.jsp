@@ -7,6 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+<%
+	String context = request.getContextPath();
+	System.out.print("contextpath -> " + context);
+%>
 	<h1> 파일 업로드 </h1>
 	<form action="upload.jsp" method="post" enctype="multipart/form-data">
 		<label for="name"> 작성자 </label> :
@@ -15,7 +20,7 @@
 		파일명 : <input type="file" name="uploadFile" id="name" required="required"> <br>
 		<input type="submit" value="확인">
 	
-	
+	<img src="<%=context%>/fileSave/kkk.jpg">
 	
 	</form>
 </body>
