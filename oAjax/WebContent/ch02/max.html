@@ -4,33 +4,34 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<script type="text/javascript" src="../js.httpRequest.js"></script>
+<script type="text/javascript" src="../js/httpRequest.js"></script>
 <script type="text/javascript">
 	function chk() {
 		sendRequest("temperate.jsp", null, kk, "GET");
-		// parameter null로 넘기고 temp 호출성공하면 kk로 넘김 
+		// parameter null로 넘기고 temp 호출성공하면 kk 콜백함수로 넘김 
 		
 	}
 	
 	function kk() {
-		var temp = document.getElementById("temp");
-		var max = document.getElementById("max");
+		var temp = document.getElementById("temp"); // "temp" div
+		var max = document.getElementById("max"); // "max" div
 		
-		if (httpRequest.readyState == 4) {
-			if (httpRequest.status == 200 ) {
-				var value = httpRequest.responseText;
+		if (httpRequest.readyState == 4) { // temperate.jsp로 보낸 요청의 서버응답이 완료되고
+			if (httpRequest.status == 200 ) { // 상태가 정상이면 
+				var value = httpRequest.responseText; // temperate.jsp 안의 값을 가져옴
 				
-				temp.innerHTML = value;
-				var tp = value.split(",");
-				var arrTemp = new Array(tp.length);
+				temp.innerHTML = value; // temp 안에 temperate.jsp 안의 값을 넣어줌
+				var tp = value.split(","); // 온도 {ㄹㄹ,ㄹㄹ,ㄹㄹ} 이렇게 되어있는거 , 단위로 잘라줌
+				var arrTemp = new Array(tp.length); // parsing 한 개수만큼 새로운 배열 만들어주고
 				
 				for (var i = 0; i < tp.length; i++) {
-					arrTemp[i] = parseFloat(tp[i]);
+					arrTemp[i] = parseFloat(tp[i]); // tp[i]를  arrTemp 로 넣어줌
+					// 5개의 배열 만들어짐
 				}
 				
 				var mx = 0;
 				for (var i = 0; i < arrTemp.length; i++) {
-					if (mx < arrTemp[i]) {
+					if (mx < arrTemp[i]) { // 돌려가면서 값이 크면 해당값으로 대입
 						mx = arrTemp[i];
 					}
 					max.innerHTML = mx; 
