@@ -13,12 +13,12 @@ span {
 <script type="text/javascript">
 	$(function() {
 		$('#chk').click(function() {
-			var id = $('#id').val();
-			var sendData = 'id='+id;
+			var id = $('#id').val(); // #id의 값을 가져와서
+			var sendData = 'id='+id; // senddata로 넣고
 			$.post('confirmId.jsp',
-					sendData,
-					function(msg) {
-						$('#msg').html(msg);
+					sendData, // senddata를 confirmid.jsp로 뿌림 
+					function(msg) { // 결과값 msg에 받아서
+						$('#msg').html(msg); // #msg에 뿌려줌 
 			});
 		});
 	});
