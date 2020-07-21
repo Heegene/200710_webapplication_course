@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('#sub').click(function() {
+			var name = $('#name').val(); // 이름으로 입력한 값 string으로 들어가게됨 
+			var pass = $('#pass').val(); // 비밀번호로 입력한 값 
+			// var sendData = 'name=' + name + '&pass=' + pass;
+			var sendData = $('form').serialize();
+			$.ajaxSetup({
+				url: 'checkin.jsp',
+				type: 'POST',
+				dataType: 'text', // checkin.jsp의 결과값을 text로  return 값을 돌려줌 
+				success: function(msg) {
+					$('#msg').html(msg); // 그 결과값을 
+				}
+			});
+			$.ajax({ // data senddata 따로 이렇게 빼도되고 합쳐도 됨 
+				data:sendData
+			});
+			
+		});
+	});
+
+</script>
+</head>
+<body>
+<form>
+	이름: <input type="text" name="name" id="name"> <br> 
+	암호: <input type="password" name="pass" id="pass"> <br>
+	<input type="button" id="sub" value="확인">
+</form>
+
+<div id="msg"></div>
+</body>
+</html>

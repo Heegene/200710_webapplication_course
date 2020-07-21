@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript">
+	$(function() { // $ 들어가면 jquery 함수임 $ 대신 jquery라고 써도 됨 
+		$('#sub').click(function() {
+			var form_data = $('form').serialize(); // form 에서 받은 data를 serialize 함
+			$('#msg').text(form_data); // msg id의 div에 넣어줌 
+		});
+	});
+
+</script>
+
+</head>
+<body>
+	<h1> 개인정보 </h1>
+	<form>
+	이름 : <input type="text" name="name" id="name"> <br>
+	암호 : <input type="password" name="pass" id="pass"> <br>
+	취미 <br>
+	가요 : <input type="checkbox" name="hobby" value="music"> <br>
+	영화 : <input type="checkbox" name="hobby" value="movie"> <br>
+	춤 : <input type="checkbox" name="hobby" value="dance"> <br>
+	<input type="button" value="확인" id="sub">
+	</form>
+<div id="msg"></div>	
+</body>
+</html>
