@@ -14,12 +14,13 @@
 	String passwd = request.getParameter("passwd");
 	
 	MemberDao md = MemberDao.getInstance();
+	// singleton 이므로 getInstance 
 	
 	
 	int result = md.confirm(id, passwd);
 	
 	if (result == 1) {
-		session.setAttribute("id", id);
+		session.setAttribute("id", id); // 페이지 이동하면서 parameter 담아야하므로 session 사용
 		response.sendRedirect("main.jsp");
 		
 	} else if (result == 0 ) {
@@ -27,7 +28,7 @@
 %>
 	<script type="text/javascript">
 		alert('암호가 일치하지 않습니다.');
-		history.go(-1);
+		history.go(-1); // loginform으로 다시 돌려보냄 
 	</script>
 
 <%
