@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+div {
+	width: 180px;
+	height: 80px;
+	margin: 3px;
+	float: left;
+}
+</style>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('#menu1').click(function() {
+			$.ajax({
+				url : 'menu.jsp',
+				dataType : 'html',
+				success : function(data) {
+					$('#msg1').html(data); // 끌어온 데이터 전체를 넣어줌 
+				}
+			});
+		});
+		$('#menu2').click(function() { // menu2 id가 클릭되면 실행 
+			$.ajax({ // url, datatype, success 로 구성됨 (ajax 를 jquery 함수로 구현해놓은 틀) 
+				url : 'menu.jsp',  // menu.jsp를 호출
+				dataType : 'html', // 
+				success : function(data) { // success=> 아까 readystate 4에 httpreq status 200인 상태인 경우 그 data가지고 넣어줌
+					$('#msg2').html($(data).find('li'));// id가 msg2인곳에 list 안의 결과만 넣어줌 
+				}
+			});
+		});
+	});
+</script>
+</head>
+<body>
+
+	<div>
+		<a id="menu1"> 메뉴 선택 </a> <br> <span id="msg1"></span>
+	</div>
+
+	<br>
+	<br>
+
+	<div>
+		<a id="menu2"> 메뉴 선택 </a> <br> <span id="msg2"></span>
+	</div>
+	<input type="text" value="선택완료"> <br>
+
+</body>
+</html>
