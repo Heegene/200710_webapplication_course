@@ -142,4 +142,81 @@ public class MemberDao {
 		
 		return li;
 	}
+	
+	public Member select(String id) throws SQLException, NamingException {
+		Member member = new Member();
+		Connection conn = null;
+		String sql = "SELECT * FROM member2 WHERE id =?";
+		ResultSet rs = null;
+		
+		
+		try {
+			conn = getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, id);
+			rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				
+			// 아이디 비번 이름 주소 번호 날짜 
+			member.setId(rs.getString(1));
+			member.setPasswd(rs.getString(2));
+			member.setName(rs.getString(3));
+			member.setAddress(rs.getString(4));
+			member.setTel(rs.getString(5));
+			member.setReg_date(rs.getDate(6));
+			
+			ps.close();
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				rs.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		
+		
+		return member;
+	}
+	
+	public int update(Member member) throws SQLException {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement ps = null;
+		
+		try {
+			// 연결부
+			conn = getConnection();
+			
+			String sql = "UPDATE member2 SET passwd=?, name=?, address=?, tel=? WHERE id=?";
+			ps = conn.prepareStatement(sql);
+						
+			ps.setString(1, member.getPasswd());
+			ps.setString(2, member.getName());
+			ps.setString(3, member.getAddress());
+			ps.setString(4, member.getTel());
+			ps.setString(5, member.getId());
+			// id, passwd, name, address, tel, regdate
+			
+			result = ps.executeUpdate();
+			
+			
+		} catch (Exception e){
+			e.printStackTrace();
+		} finally {
+			ps.close();
+			conn.close();
+		}
+					
+		return result;
+		
+	}
+	
+	
 }
