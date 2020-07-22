@@ -23,6 +23,7 @@
 		}
 		window.open("confirmId.jsp?id=" + frm.id.value, "",
 					 "width=300 height=300");
+		/* window.open(url, name, space, replace) */
 		
 	}
 </script>

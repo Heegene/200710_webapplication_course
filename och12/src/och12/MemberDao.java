@@ -253,5 +253,41 @@ public class MemberDao {
 		
 	}
 	
+
+	public int confirm(String id) throws SQLException {
+		int chk = 0;
+		ResultSet rs = null;
+		Connection conn = getConnection();
+		
+		String sql = "SELECT count(*) FROM member2 WHERE id=?"; // 아이디로 암호값 불러오고
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setString(1, id) ;
+		rs = ps.executeQuery();
+		
+		try {
+			if (rs.next()) {
+				int count = rs.getInt(1);
+				if (count == 1) {
+					chk = 1;
+				} else {
+					chk = 0;
+				}
+			}
+			else {
+					chk = -1; // 아이디가 없어서 끌려나오지 않는 경우 
+				}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			rs.close();
+			ps.close();
+			conn.close();
+		}
+		
+		return chk;
+	}
+	
 	
 }
