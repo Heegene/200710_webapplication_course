@@ -218,5 +218,40 @@ public class MemberDao {
 		
 	}
 	
+	public int delete(String id, String passwd) throws SQLException {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try {
+			conn = getConnection();
+			
+			String sql = "DELETE FROM member2 WHERE id=? AND passwd=?";
+			ps = conn.prepareStatement(sql);
+			// 아니면 id=?만 걸고 그냥 1인경우만 리턴하게할수도있음
+			
+			ps.setString(1, id);
+			ps.setString(2, passwd);
+			
+			result = ps.executeUpdate();
+			
+			if (result >= 1 ) {
+				result = 1;
+			} else if (result == 0) {
+				result = 0;
+			} else {
+				result = -1;
+			}
+		
+		} catch (Exception e){
+			e.printStackTrace();
+		} finally {
+			ps.close();
+			conn.close();
+		}
+					
+		return result;
+		
+	}
+	
 	
 }
