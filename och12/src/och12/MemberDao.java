@@ -4,9 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 public class MemberDao {
@@ -72,4 +76,70 @@ public class MemberDao {
 		return chk;
 	}
 	
+	public int insert(Member member) throws SQLException {
+		int result = 0;
+		Connection conn = null;
+		try {
+			// 연결부
+			Context ctx = new InitialContext();
+			DataSource ds = (DataSource)ctx.lookup("java:comp/env/jdbc/OracleDB");
+			conn = ds.getConnection();
+			
+			String sql = "INSERT INTO member2 VALUES (?,?,?,?,?,sysdate)";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			
+			ps.setString(1, member.getId());
+			ps.setString(2, member.getPasswd());
+			ps.setString(3, member.getName());
+			ps.setString(4, member.getAddress());
+			ps.setString(5, member.getTel());
+			// id, passwd, name, address, tel, regdate
+			
+			result = ps.executeUpdate();
+			
+			ps.close();
+			conn.close();
+			
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+					
+		return result;
+		
+	}
+	
+	public List<Member> list() throws SQLException, NamingException {
+		List<Member> li = new ArrayList<Member>();
+		Context ctx = new InitialContext();
+		DataSource ds = (DataSource)ctx.lookup("java:comp/env/jdbc/OracleDB");
+		
+		Connection conn = ds.getConnection();
+		String sql = "SELECT * FROM member2";
+		Statement stmt = conn.createStatement();
+		
+		ResultSet rs = stmt.executeQuery(sql);
+		
+		
+		while (rs.next()) {
+					// id 비번 이름 주소 번호 등록일자
+			Member member = new Member();
+			member.setId(rs.getString(1));
+			member.setPasswd(rs.getString(2));
+			member.setName(rs.getString(3));
+			member.setAddress(rs.getString(4));
+			member.setTel(rs.getString(5));
+			member.setReg_date(rs.getDate(6));
+			
+			li.add(member);
+		}
+		
+		
+		
+		rs.close();
+		stmt.close();
+		conn.close();
+		
+		return li;
+	}
 }

@@ -33,5 +33,6 @@
 	</form>
 	
 	<input type="button" value="회원가입" onclick="location.href='joinForm.jsp'">
+	<% // 여기에 parameter 넣고가고싶으면 session 같은데 담아다니면 됨  %>
 </body>
 </html>
