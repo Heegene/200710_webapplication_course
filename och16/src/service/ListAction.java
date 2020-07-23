@@ -24,7 +24,7 @@ public class ListAction implements CommandProcess {
 			// board의 row 개수 
 			// 이렇게 외부에서 뭐 받아오는 경우 try catch 로 감싸줄 것 
 			
-			
+			// 페이징작업부 
 			String pageNum = request.getParameter("pageNum");
 			if (pageNum == null || pageNum.equals("") ) {
 				pageNum = "1";
@@ -33,20 +33,20 @@ public class ListAction implements CommandProcess {
 			int currentPage = Integer.parseInt(pageNum);
 			int pageSize = 10, blockSize = 10;
 			
-			int startRow = (currentPage - 1) * pageSize + 1;
-			int endRow = startRow + pageSize - 1;
+			int startRow = (currentPage - 1) * pageSize + 1; // 기본 1
+			int endRow = startRow + pageSize - 1; // 기본 10
 			
 			int startNum = totCnt - startRow + 1;
 			
 			// List<Board> list = bd.list(startRow, endRow);
 			
-			int pageCnt = (int)Math.ceil((double)totCnt/pageSize);
-			int startPage = (int)(currentPage-1) / blockSize*blockSize + 1;
+			int pageCnt = (int)Math.ceil((double)totCnt/pageSize); // ceil해주는 이유: 31개라도 페이지는 4페이지 해야하므로
+			int startPage = (int)(currentPage-1) / blockSize*blockSize + 1; // 1
 			
-			int endPage = startPage + blockSize - 1;
+			int endPage = startPage + blockSize - 1; // 10나오는데
 			
 			if (endPage > pageCnt) {
-				endPage = pageCnt;
+				endPage = pageCnt; // 10페이ㅈㅣ말고 4페이지로 정해줌 있는페이지만 보여주기위해 
 			}
 			
 			request.setAttribute("totCnt", totCnt);
@@ -59,7 +59,7 @@ public class ListAction implements CommandProcess {
 			request.setAttribute("startPage", startPage);
 			request.setAttribute("endPage", endPage);
 			
-			System.out.println("----------------------------------------------");
+			System.out.println("----------------------------------------------"); // 콘솔로 보기위한 내용 
 			System.out.println("startNum --> " + startNum); // /ch16/list.do
 			System.out.println("totCnt --> " + totCnt); // /ch16/list.do
 			System.out.println("currentPage --> " + currentPage); // /ch16/list.do
