@@ -11,6 +11,7 @@ import dao.Board;
 import dao.BoardDao;
 
 public class ListAction implements CommandProcess {
+	// writeAction, ListAction 등이 모두 requestPro를 오버라이딩하도록 표준화 
 	
 	@Override
 	public String requestPro(HttpServletRequest request, HttpServletResponse response)
@@ -38,7 +39,7 @@ public class ListAction implements CommandProcess {
 			
 			int startNum = totCnt - startRow + 1;
 			
-			// List<Board> list = bd.list(startRow, endRow);
+			List<Board> list = bd.list(startRow, endRow);
 			
 			int pageCnt = (int)Math.ceil((double)totCnt/pageSize); // ceil해주는 이유: 31개라도 페이지는 4페이지 해야하므로
 			int startPage = (int)(currentPage-1) / blockSize*blockSize + 1; // 1
@@ -53,7 +54,7 @@ public class ListAction implements CommandProcess {
 			request.setAttribute("pageNum", pageNum);
 			request.setAttribute("currentPage", currentPage);
 			request.setAttribute("startNum", startNum);
-			// request.setAttribute("list", list);
+			request.setAttribute("list", list);
 			request.setAttribute("blockSize", blockSize);
 			request.setAttribute("pageCnt", pageCnt);
 			request.setAttribute("startPage", startPage);
