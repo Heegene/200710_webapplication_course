@@ -243,4 +243,53 @@ public class BoardDao {
 		
 		return result;
 	}
+	
+	public int insert (Board board) {
+		int result = 0;
+		int maxnum = 0;
+		String max = "SELECT MAX(num) FROM board";
+		String sql = "INSERT INTO board VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, sysdate)";
+		
+		try 
+		
+		(Connection conn = getConnection();
+	     PreparedStatement ps = conn.prepareStatement(sql);
+		 Statement st = conn.createStatement();
+		)
+		{ 	
+			ResultSet rs = st.executeQuery(max);
+			
+			if (rs.next()) {
+				maxnum = rs.getInt(1);
+			}
+			
+			ps.setInt(1, maxnum+1);
+			ps.setString(2, board.getWriter());
+			ps.setString(3, board.getSubject());
+			ps.setString(4, board.getContent());
+			ps.setString(5, board.getEmail());
+			ps.setString(6, board.getPasswd());
+			ps.setInt(7, maxnum+1);
+			ps.setInt(8, board.getRe_step());
+			ps.setInt(9, board.getRe_level());
+			ps.setString(10, board.getIp());
+			
+			result = ps.executeUpdate();
+
+			if (result == 1) {
+				System.out.println("글작성 성공");
+			} else {
+				System.out.println("글작성 실패");
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		
+		return result;
+	}
+	
+	
 }
