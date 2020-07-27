@@ -206,4 +206,41 @@ public class BoardDao {
 
 		return board;
 	}
+	
+	
+	public int update (Board board) {
+		int result = 0;
+		
+		String sql = "UPDATE board SET writer=?, email=?, subject=?, passwd=?, content=?, ip=? WHERE num=?";
+		
+		try 
+		
+		(Connection conn = getConnection();
+	     PreparedStatement ps = conn.prepareStatement(sql);)
+		
+		{ 
+			ps.setString(1, board.getWriter());
+			ps.setString(2, board.getEmail());
+			ps.setString(3, board.getSubject());
+			ps.setString(4, board.getPasswd());
+			ps.setString(5, board.getContent());
+			ps.setString(6, board.getIp());
+			ps.setInt(7, board.getNum());
+			
+			result = ps.executeUpdate();
+			
+			if (result == 1) {
+				System.out.println("수정 성공");
+			} else {
+				System.out.println("수정 실패");
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		
+		return result;
+	}
 }
