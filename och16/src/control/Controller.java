@@ -39,6 +39,7 @@ public class Controller extends HttpServlet {
     public void init(ServletConfig config) throws ServletException { 
 		// web.xml 에서 propertyConfig에 해당하는 init-param 값 읽어옴
 		String props = config.getInitParameter("config"); // init parameter 를 받아와서 props로 String 선언
+		System.out.println("props -> " + props);
 		
 		// 명령어와 처리 클래스의 매핑 정보를 저장할 Properties 객체 생성
 		Properties pr = new Properties(); // properties라는 class가 있음. 그걸 인스턴스화
