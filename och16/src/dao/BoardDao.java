@@ -169,21 +169,19 @@ public class BoardDao {
 
 	}
 
-
 	public Board select(int num) {
-		
+
 		Board board = new Board();
 		String sql = "SELECT * FROM board WHERE num=?";
 
-		try (Connection conn = getConnection();
-			 PreparedStatement ps = conn.prepareStatement(sql);
+		try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql);
 
 		)
 
 		{
 			ps.setInt(1, num);
 			ResultSet rs = ps.executeQuery();
-			
+
 			while (rs.next()) {
 				board.setNum(rs.getInt("num"));
 				board.setWriter(rs.getString("writer"));
@@ -197,28 +195,26 @@ public class BoardDao {
 				board.setRe_level(rs.getInt("re_level"));
 				board.setIp(rs.getString("ip"));
 				board.setReg_date(rs.getDate("reg_date"));
-				System.out.println("num -> "+ num);
+				System.out.println("num -> " + num);
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		}
 
 		return board;
 	}
-	
-	
-	public int update (Board board) {
+
+	public int update(Board board) {
 		int result = 0;
-		
+
 		String sql = "UPDATE board SET writer=?, email=?, subject=?, passwd=?, content=?, ip=? WHERE num=?";
-		
-		try 
-		
-		(Connection conn = getConnection();
-	     PreparedStatement ps = conn.prepareStatement(sql);)
-		
-		{ 
+
+		try
+
+		(Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql);)
+
+		{
 			ps.setString(1, board.getWriter());
 			ps.setString(2, board.getEmail());
 			ps.setString(3, board.getSubject());
@@ -226,70 +222,87 @@ public class BoardDao {
 			ps.setString(5, board.getContent());
 			ps.setString(6, board.getIp());
 			ps.setInt(7, board.getNum());
-			
+
 			result = ps.executeUpdate();
-			
+
 			if (result == 1) {
 				System.out.println("수정 성공");
 			} else {
 				System.out.println("수정 실패");
 			}
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		
-		
-		return result;
-	}
-	
-	public int insert (Board board) {
-		int result = 0;
-		int maxnum = 0;
-		String max = "SELECT MAX(num) FROM board";
-		String sql = "INSERT INTO board VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, sysdate)";
-		
-		try 
-		
-		(Connection conn = getConnection();
-	     PreparedStatement ps = conn.prepareStatement(sql);
-		 Statement st = conn.createStatement();
-		)
-		{ 	
-			ResultSet rs = st.executeQuery(max);
-			
-			if (rs.next()) {
-				maxnum = rs.getInt(1);
-			}
-			
-			ps.setInt(1, maxnum+1);
-			ps.setString(2, board.getWriter());
-			ps.setString(3, board.getSubject());
-			ps.setString(4, board.getContent());
-			ps.setString(5, board.getEmail());
-			ps.setString(6, board.getPasswd());
-			ps.setInt(7, maxnum+1);
-			ps.setInt(8, board.getRe_step());
-			ps.setInt(9, board.getRe_level());
-			ps.setString(10, board.getIp());
-			
-			result = ps.executeUpdate();
 
-			if (result == 1) {
-				System.out.println("글작성 성공");
-			} else {
-				System.out.println("글작성 실패");
-			}
-			
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		
-		
+
 		return result;
 	}
-	
-	
+
+	public int insert(Board board) throws SQLException {
+		int num = board.getNum();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		int result = 0;
+		String sql1 = "select nvl(max(num),0) from board"; // maxnumber를 얻어냄
+		String sql = "INSERT  INTO board VALUES(?,?,?,?,?,?,?,?,?,?,?,sysdate)";
+		String sql2 = "update board set re_step = re_step+1 where " + " ref=? and re_step > ?"; // 답글용 sql
+		// 원래보다 re_step이 높은경우 값을 받기 위해 re_step 하나 넣어줌 
+		try {
+			conn = getConnection();
+			if (num != 0) { // 답글인 경우
+				pstmt = conn.prepareStatement(sql2);
+				pstmt.setInt(1, board.getRef());
+				pstmt.setInt(2, board.getRe_step());
+				pstmt.executeUpdate();
+				pstmt.close();
+				board.setRe_step(board.getRe_step() + 1);
+				board.setRe_level(board.getRe_level() + 1);
+
+			}
+			pstmt = conn.prepareStatement(sql1); // re_step 값을 하나 올린다음 다시 insert문으로 들어옴
+			rs = pstmt.executeQuery();
+			rs.next();
+			// key인 num 1씩 증가, mysql auto_increment 또는 oracle sequence
+			// sequence를 사용 : values(시퀀스명(board_seq).nextval,?,?...)
+			int number = rs.getInt(1) + 1; // max값+1해줌(다음 글번호) 
+			
+			rs.close();
+			pstmt.close();
+			
+			if (num == 0) {
+				board.setRef(number);
+			}
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, number);
+			pstmt.setString(2, board.getWriter());
+			pstmt.setString(3, board.getSubject());
+			pstmt.setString(4, board.getContent());
+			pstmt.setString(5, board.getEmail());
+			pstmt.setInt(6, board.getReadcount());
+			pstmt.setString(7, board.getPasswd());
+			pstmt.setInt(8, board.getRef());
+			pstmt.setInt(9, board.getRe_step());
+			pstmt.setInt(10, board.getRe_level());
+			pstmt.setString(11, board.getIp());
+			result = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+
+			System.out.println(e.getMessage());
+
+		} finally { // 닫아줌
+			if (rs != null)
+				rs.close();
+			if (pstmt != null)
+				pstmt.close();
+			if (conn != null)
+				conn.close();
+		}
+		return result;
+	}
+
 }
