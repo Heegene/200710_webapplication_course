@@ -254,25 +254,25 @@ public class BoardDao {
 			conn = getConnection();
 			if (num != 0) { // 답글인 경우
 				pstmt = conn.prepareStatement(sql2);
-				pstmt.setInt(1, board.getRef());
-				pstmt.setInt(2, board.getRe_step());
-				pstmt.executeUpdate();
+				pstmt.setInt(1, board.getRef()); // ref값 받아서 조건검색
+				pstmt.setInt(2, board.getRe_step());  // re_step값 받아서 조건검색
+				pstmt.executeUpdate();  // 해당 조건에 맞춘다음 re_step 값 1 더함
 				pstmt.close();
-				board.setRe_step(board.getRe_step() + 1);
+				board.setRe_step(board.getRe_step() + 1); // re_step 에 1을 더해줌
 				board.setRe_level(board.getRe_level() + 1);
 
 			}
 			pstmt = conn.prepareStatement(sql1); // re_step 값을 하나 올린다음 다시 insert문으로 들어옴
-			rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery(); 
 			rs.next();
 			// key인 num 1씩 증가, mysql auto_increment 또는 oracle sequence
 			// sequence를 사용 : values(시퀀스명(board_seq).nextval,?,?...)
-			int number = rs.getInt(1) + 1; // max값+1해줌(다음 글번호) 
+			int number = rs.getInt(1) + 1; 
 			
 			rs.close();
 			pstmt.close();
 			
-			if (num == 0) {
+			if (num == 0) { // 신규 글 작성 
 				board.setRef(number);
 			}
 			
