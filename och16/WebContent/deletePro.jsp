@@ -17,8 +17,8 @@
 
 <c:if test="${result == 0}">
 	<script type="text/javascript">
-		alert('삭제에 실패하였습니다. ');
-		location.href="updateForm.do?num=${num}&pageNum=${pageNum}";
+		alert('비밀번호를 확인해 주세요 ');
+		location.href="deleteForm.do?num=${num}&pageNum=${pageNum}";
 	</script>
 </c:if>
 </body>

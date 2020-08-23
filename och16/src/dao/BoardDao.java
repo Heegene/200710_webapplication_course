@@ -309,7 +309,7 @@ public class BoardDao {
 		int result = 0;
 
 		String sql = "DELETE FROM board WHERE num=? AND passwd=?";
-
+	
 		try
 
 		(Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql);)
@@ -322,10 +322,8 @@ public class BoardDao {
 
 			if (result == 1) {
 				System.out.println("삭제 성공");
-			} else if (result == 0) {
-				System.out.println("비밀번호를 확인해 주세요.");
-			} else {
-				System.out.println("삭제에 실패하였습니다. ");
+			}  else {
+				System.out.println("삭제에 실패하였습니다. 비밀번호를 확인해 주세요");
 			}
 
 		} catch (Exception e) {

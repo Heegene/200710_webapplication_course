@@ -14,25 +14,21 @@ public class DeleteProAction implements CommandProcess {
 	@Override
 	public String requestPro(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		
 		try 
 		
-		
-		
-		{
+		{	int num = Integer.parseInt(request.getParameter("num"));
 			request.setCharacterEncoding("utf-8");
 			String pageNum = request.getParameter("pageNum");
 			Board board = new Board();
 			BoardDao bd = BoardDao.getInstance();
 			
-			board.setNum(Integer.parseInt(request.getParameter("num")));
+			board.setNum(num);
+			// board.setNum(Integer.parseInt(request.getParameter("num")));
 			board.setPasswd(request.getParameter("passwd"));
-			
-			
 			
 			int result = bd.delete(board);
 			
+			request.setAttribute("num", num);
 			request.setAttribute("result", result);
 			request.setAttribute("pageNum", pageNum);
 					
